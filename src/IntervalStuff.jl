@@ -7,9 +7,7 @@ using IntervalArithmetic, IntervalConstraintProgramming, ModelingToolkit, Distri
 
 function set_up(g,parameter_space,flex)
     #uni = LinRange(0,2*pi,100)
-    dims = length(parameter_space)
     #x = [[cos(x),sin(x)] for x in uni]
-    index = collect(1:dims)
     # θ = Dict("w$i"=>rand(Uniform(-lims,lims)) for i in index)
     θ = rand(parameter_space)
     function model_truth(x)
@@ -98,7 +96,6 @@ function automate_S1(inputs, parameter_space,
     local paving
     for i in 1:num_samples
         println("run = ",i)
-        true_W = rand(parameter_space)
         paving, C, W, θ, X, Y, model_truth = main(inputs,parameter_space,act_funct,accuracy,flex,dim)
         #zero_set = plot_with_makie(paving)
         #diffusion_plot = diffusion_map(matrix_mids,t,dim)
@@ -127,7 +124,6 @@ function main(parameter_space,act_funct,accuracy,flex,dims)
     paving = pave(sep, W, accuracy)
     # plt = Plots.plot(paving.inner, aspect_ratio=:equal, legend=:false)
     # Plots.plot!(paving.boundary, aspect_ratio=:equal, linewidth=0, label="", color="gray")
-    θ_test = mid(rand(paving.boundary))
     #model_trained = trained_model(g,θ_test)
     #plt = plot_with_makie(paving)
     # display(plt)
